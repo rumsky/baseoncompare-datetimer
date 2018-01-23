@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/basedoncompare-datetimer.css">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/boostrap-datetimepicker/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript" src="lib/moment.js"></script>
+    <!--<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>-->
+    <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+
+</head>
+<body>
+<div class="container" style="width: 800px; margin:50px auto;">
+    <form action="" class="form-inline">
+        <label>基准时间时间：</label>
+        <div class="form-group input-group date form_date" id="formStartDate" data-date=""
+             data-date-format="yyyy-mm-dd hh:ii:ss"
+             data-link-field="dtp_startDate" data-link-format="yyyy-mm-dd hh:ii:ss">
+
+            <input id="startDate" name="startDate" class="form-control" size="16" type="text" value=""
+                   readonly>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+        <div class="form-group">
+            <label>同比开始时间：</label>
+            <a class="btn btn-default btn-boctimer">选择时间</a>
+        </div>
+
+
+    </form>
+
+
+</div>
+<script type="text/javascript" src="js/baseoncompare-datetimer.js"></script>
+
+<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="lib/boostrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="lib/boostrap-datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        //初始化时间控件
+        $('.form_date').datetimepicker({
+            language: 'zh-CN',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            viewMode: 'month'
+
+        });
+
+        var tt=$('.btn-boctimer').boctimer({
+            basedTimerId:'startDate',
+            isDisplayInElement:true
+
+        });
+
+        $('.btn-boctimer').on('apply.boctimer', function(ev, picker) {
+            var beforeTime = moment(picker.bocDateTime).format('YYYY/MM/DD HH:mm:ss') ;
+
+            $('.btn-boctimer').html(beforeTime);
+        });
+
+        $('.form_date')
+            .datetimepicker()
+            .on('changeDate', function(ev){
+                //tt.calculation($('#startDate').val())
+
+                $('.btn-boctimer').data('boctimer').calculation($('#startDate').val());
+            });
+
+
+
+    });
+</script>
+</body>
+</html>
